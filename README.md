@@ -1,8 +1,13 @@
 (This repo is in its alpha state and is subject to changes. Currently, it is mean to unveal the implementation details of the paper. Pretrained model is under preparation and is coming soon.)
 
 # SegLink
-![](https://github.com/BowieHsu/seglink-1/blob/master/mistake.JPG)
+
 Detecting Oriented Text in Natural Images by Linking Segments (https://arxiv.org/abs/1703.06520).
+
+## Original Seglink Drawback
+
+![](https://github.com/BowieHsu/seglink-1/blob/master/mistake.JPG)
+As you can see, Seglink try to detect text area using segments and link score.
 
 ## Prerequisites
 
