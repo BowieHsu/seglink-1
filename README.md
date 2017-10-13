@@ -7,6 +7,7 @@ Detecting Oriented Text in Natural Images by Linking Segments (https://arxiv.org
 ## Original Seglink Drawback
 
 ![](https://github.com/BowieHsu/seglink-1/blob/master/mistake.JPG)
+
 As you can see, Seglink try to detect text area using segments and link score.
 
 ## Prerequisites
