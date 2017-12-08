@@ -24,7 +24,7 @@ def convert_caffemodel_to_ckpt():
   # create network
   vgg16 = model_vgg16.Vgg16Model()
   model_scope = args.model_scope
-  vgg16.build_model(tf.placeholder(tf.float32, shape=[32,3,300,300]), scope=model_scope)
+  vgg16.build_model(tf.placeholder(tf.float32, shape=[1,300,300,3]), scope=model_scope)
 
   # auxillary functions for conversion
   def load_conv_weight(target_name, src_name):
@@ -44,34 +44,81 @@ def convert_caffemodel_to_ckpt():
     assigns = [
       load_conv_weight('conv1_1/conv2d/weight', 'conv1_1'),
       load_conv_bias('conv1_1/conv2d/bias', 'conv1_1'),
-      load_conv_weight('conv1_2/conv2d/weight', 'conv1_2'),
-      load_conv_bias('conv1_2/conv2d/bias', 'conv1_2'),
-      load_conv_weight('conv2_1/conv2d/weight', 'conv2_1'),
-      load_conv_bias('conv2_1/conv2d/bias', 'conv2_1'),
-      load_conv_weight('conv2_2/conv2d/weight', 'conv2_2'),
-      load_conv_bias('conv2_2/conv2d/bias', 'conv2_2'),
-      load_conv_weight('conv3_1/conv2d/weight', 'conv3_1'),
-      load_conv_bias('conv3_1/conv2d/bias', 'conv3_1'),
-      load_conv_weight('conv3_2/conv2d/weight', 'conv3_2'),
-      load_conv_bias('conv3_2/conv2d/bias', 'conv3_2'),
-      load_conv_weight('conv3_3/conv2d/weight', 'conv3_3'),
-      load_conv_bias('conv3_3/conv2d/bias', 'conv3_3'),
-      load_conv_weight('conv4_1/conv2d/weight', 'conv4_1'),
-      load_conv_bias('conv4_1/conv2d/bias', 'conv4_1'),
-      load_conv_weight('conv4_2/conv2d/weight', 'conv4_2'),
-      load_conv_bias('conv4_2/conv2d/bias', 'conv4_2'),
-      load_conv_weight('conv4_3/conv2d/weight', 'conv4_3'),
-      load_conv_bias('conv4_3/conv2d/bias', 'conv4_3'),
-      load_conv_weight('conv5_1/conv2d/weight', 'conv5_1'),
-      load_conv_bias('conv5_1/conv2d/bias', 'conv5_1'),
-      load_conv_weight('conv5_2/conv2d/weight', 'conv5_2'),
-      load_conv_bias('conv5_2/conv2d/bias', 'conv5_2'),
-      load_conv_weight('conv5_3/conv2d/weight', 'conv5_3'),
-      load_conv_bias('conv5_3/conv2d/bias', 'conv5_3'),
-      load_conv_weight('fc6/atrous_conv2d/weight', 'fc6'),
-      load_conv_bias('fc6/atrous_conv2d/bias', 'fc6'),
-      load_conv_weight('fc7/conv2d/weight', 'fc7'),
-      load_conv_bias('fc7/conv2d/bias', 'fc7'),
+      load_conv_weight('conv1_2_V/conv2d/weight', 'conv1_2_V'),
+      load_conv_bias('conv1_2_V/conv2d/bias', 'conv1_2_V'),
+      load_conv_weight('conv1_2_H/conv2d/weight', 'conv1_2_H'),
+      load_conv_bias('conv1_2_H/conv2d/bias', 'conv1_2_H'),
+      load_conv_weight('conv1_2_P/conv2d/weight', 'conv1_2_P'),
+      load_conv_bias('conv1_2_P/conv2d/bias', 'conv1_2_P'),
+
+      load_conv_weight('conv2_1_V/conv2d/weight', 'conv2_1_V'),
+      load_conv_bias('conv2_1_V/conv2d/bias', 'conv2_1_V'),
+      load_conv_weight('conv2_1_H/conv2d/weight', 'conv2_1_H'),
+      load_conv_bias('conv2_1_H/conv2d/bias', 'conv2_1_H'),
+      load_conv_weight('conv2_1_P/conv2d/weight', 'conv2_1_P'),
+      load_conv_bias('conv2_1_P/conv2d/bias', 'conv2_1_P'),
+
+      load_conv_weight('conv2_2_V/conv2d/weight', 'conv2_2_V'),
+      load_conv_bias('conv2_2_V/conv2d/bias', 'conv2_2_V'),
+      load_conv_weight('conv2_2_H/conv2d/weight', 'conv2_2_H'),
+      load_conv_bias('conv2_2_H/conv2d/bias', 'conv2_2_H'),
+      load_conv_weight('conv2_2_P/conv2d/weight', 'conv2_2_P'),
+      load_conv_bias('conv2_2_P/conv2d/bias', 'conv2_2_P'),
+
+      load_conv_weight('conv3_1_V/conv2d/weight', 'conv3_1_V'),
+      load_conv_bias('conv3_1_V/conv2d/bias', 'conv3_1_V'),
+      load_conv_weight('conv3_1_H/conv2d/weight', 'conv3_1_H'),
+      load_conv_bias('conv3_1_H/conv2d/bias', 'conv3_1_H'),
+      load_conv_weight('conv3_1_P/conv2d/weight', 'conv3_1_P'),
+      load_conv_bias('conv3_1_P/conv2d/bias', 'conv3_1_P'),
+
+      load_conv_weight('conv3_2_V/conv2d/weight', 'conv3_2_V'),
+      load_conv_bias('conv3_2_V/conv2d/bias', 'conv3_2_V'),
+      load_conv_weight('conv3_2_H/conv2d/weight', 'conv3_2_H'),
+      load_conv_bias('conv3_2_H/conv2d/bias', 'conv3_2_H'),
+      load_conv_weight('conv3_2_P/conv2d/weight', 'conv3_2_P'),
+      load_conv_bias('conv3_2_P/conv2d/bias', 'conv3_2_P'),
+
+      load_conv_weight('conv3_3_V/conv2d/weight', 'conv3_3_V'),
+      load_conv_bias('conv3_3_V/conv2d/bias', 'conv3_3_V'),
+      load_conv_weight('conv3_3_H/conv2d/weight', 'conv3_3_H'),
+      load_conv_bias('conv3_3_H/conv2d/bias', 'conv3_3_H'),
+      load_conv_weight('conv3_3_P/conv2d/weight', 'conv3_3_P'),
+      load_conv_bias('conv3_3_P/conv2d/bias', 'conv3_3_P'),
+
+      load_conv_weight('conv4_1_V/conv2d/weight', 'conv4_1_V'),
+      load_conv_bias('conv4_1_V/conv2d/bias', 'conv4_1_V'),
+      load_conv_weight('conv4_1_H/conv2d/weight', 'conv4_1_H'),
+      load_conv_bias('conv4_1_H/conv2d/bias', 'conv4_1_H'),
+      load_conv_weight('conv4_1_P/conv2d/weight', 'conv4_1_P'),
+      load_conv_bias('conv4_1_P/conv2d/bias', 'conv4_1_P'),
+
+      load_conv_weight('conv4_2_V/conv2d/weight', 'conv4_2_V'),
+      load_conv_bias('conv4_2_V/conv2d/bias', 'conv4_2_V'),
+      load_conv_weight('conv4_2_H/conv2d/weight', 'conv4_2_H'),
+      load_conv_bias('conv4_2_H/conv2d/bias', 'conv4_2_H'),
+      load_conv_weight('conv4_2_P/conv2d/weight', 'conv4_2_P'),
+      load_conv_bias('conv4_2_P/conv2d/bias', 'conv4_2_P'),
+
+      load_conv_weight('conv4_3_V/conv2d/weight', 'conv4_3_V'),
+      load_conv_bias('conv4_3_V/conv2d/bias', 'conv4_3_V'),
+      load_conv_weight('conv4_3_H/conv2d/weight', 'conv4_3_H'),
+      load_conv_bias('conv4_3_H/conv2d/bias', 'conv4_3_H'),
+      load_conv_weight('conv4_3_P/conv2d/weight', 'conv4_3_P'),
+      load_conv_bias('conv4_3_P/conv2d/bias', 'conv4_3_P'),
+
+      load_conv_weight('conv5_1_V/conv2d/weight', 'conv5_1_V'),
+      load_conv_bias('conv5_1_V/conv2d/bias', 'conv5_1_V'),
+      load_conv_weight('conv5_1_H/conv2d/weight', 'conv5_1_H'),
+      load_conv_bias('conv5_1_H/conv2d/bias', 'conv5_1_H'),
+      load_conv_weight('conv5_2_V/conv2d/weight', 'conv5_2_V'),
+      load_conv_bias('conv5_2_V/conv2d/bias', 'conv5_2_V'),
+      load_conv_weight('conv5_2_H/conv2d/weight', 'conv5_2_H'),
+      load_conv_bias('conv5_2_H/conv2d/bias', 'conv5_2_H'),
+      load_conv_weight('conv5_3_V/conv2d/weight', 'conv5_3_V'),
+      load_conv_bias('conv5_3_V/conv2d/bias', 'conv5_3_V'),
+      load_conv_weight('conv5_3_H/conv2d/weight', 'conv5_3_H'),
+      load_conv_bias('conv5_3_H/conv2d/bias', 'conv5_3_H'),
     ]
     with tf.control_dependencies(assigns):
       load_op = tf.no_op(name='load_op')
